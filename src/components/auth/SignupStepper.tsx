@@ -138,7 +138,10 @@ const SignupStepper: React.FC = () => {
     if (values.role === "buyer") {
       axiosInstance
         .get("/api/categories")
-        .then((res) => setCategories(res.data))
+        .then((res) => {
+          const categories = res.data.map((category: any) => category.name);
+          setCategories(categories);
+        }) // This will set categories as an array of strings})
         .catch((err) => {
           setCategories([]);
           setBackendError(
@@ -151,7 +154,13 @@ const SignupStepper: React.FC = () => {
     } else {
       axiosInstance
         .get("/api/product-types")
-        .then((res) => setProductTypes(res.data))
+        .then((res) => {
+          console.log("Product Types:", res.data);
+          const productTypes = res.data.map(
+            (productType: any) => productType.name
+          );
+          setProductTypes(productTypes); // This will set productTypes as an array of strings
+        })
         .catch((err) => {
           setProductTypes([]);
           setBackendError(
@@ -247,7 +256,7 @@ const SignupStepper: React.FC = () => {
       );
     } finally {
       setResentLoading(false);
-      setTimeout(() =>setResentMsg(null), 5000);
+      setTimeout(() => setResentMsg(null), 5000);
     }
   };
 
