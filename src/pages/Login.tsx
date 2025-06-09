@@ -190,7 +190,7 @@ export default function Login() {
               <span className="mx-3 text-[gray] text-sm">or</span>
               <div className="flex-grow border-t border-[gray] opacity-20"></div>
             </div>
-            <div className="w-full">
+            <div className="w-[100%]">
               <GoogleSignInButton />
             </div>
           </form>

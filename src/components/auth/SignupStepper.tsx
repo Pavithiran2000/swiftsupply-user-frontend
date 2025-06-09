@@ -22,7 +22,7 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axiosInstance from "../../api/axiosInstance";
 
-type UserRole = "buyer" | "seller";
+type UserRole = "BUYER" | "SELLER";
 type UserType = "retailers" | "wholesales";
 type StepKey = 0 | 1 | 2 | 3;
 
@@ -71,7 +71,7 @@ const initialState: SignupState = {
   lastName: "",
   email: "",
   contact: "",
-  role: "buyer",
+  role: "BUYER",
   userType: "retailers",
   companyName: "",
   companyReg: "",
@@ -135,7 +135,7 @@ const SignupStepper: React.FC = () => {
   useEffect(() => {
     if (activeStep !== 1) return;
     setOptionsLoading(true);
-    if (values.role === "buyer") {
+    if (values.role === "BUYER") {
       axiosInstance
         .get("/api/categories")
         .then((res) => setCategories(res.data))
@@ -186,6 +186,7 @@ const SignupStepper: React.FC = () => {
       setLoading(true);
       setErrors({});
       try {
+        console.log(values);
         const payload: any = {
           firstName: values.firstName,
           lastName: values.lastName,
@@ -194,7 +195,7 @@ const SignupStepper: React.FC = () => {
           role: values.role,
           password: values.password,
         };
-        if (values.role === "buyer") {
+        if (values.role === "BUYER") {
           payload.userType = values.userType;
           payload.companyName = values.companyName;
           payload.companyReg = values.companyReg;
@@ -290,7 +291,7 @@ const SignupStepper: React.FC = () => {
         newErrors.contact = "Invalid phone number";
     }
     if (step === 1) {
-      if (values.role === "buyer") {
+      if (values.role === "BUYER") {
         if (!values.companyName)
           newErrors.companyName = "Company name required";
         if (!values.companyReg) newErrors.companyReg = "Company Reg. required";
@@ -492,12 +493,12 @@ const SignupStepper: React.FC = () => {
               onChange={(e) => handleField("role", e.target.value)}
             >
               <FormControlLabel
-                value="buyer"
+                value="BUYER"
                 control={<Radio color="primary" />}
                 label="Buyer"
               />
               <FormControlLabel
-                value="seller"
+                value="SELLER"
                 control={<Radio color="primary" />}
                 label="Seller"
               />
@@ -509,11 +510,11 @@ const SignupStepper: React.FC = () => {
       return (
         <>
           <div className="font-bold text-xl mb-2">
-            {values.role === "buyer"
+            {values.role === "BUYER"
               ? "Company Information"
               : "Store Information"}
           </div>
-          {values.role === "buyer" ? (
+          {values.role === "BUYER" ? (
             <div className="space-y-4">
               <FormLabel className="text-[#000]" sx={{ fontWeight: 600 }}>
                 Company Name

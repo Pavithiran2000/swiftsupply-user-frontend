@@ -6,18 +6,18 @@ import Login from "./pages/Login";
 // import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 // import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Home from "./pages/Home";
-// import ProfileSettings from "./pages/Buyer/ProfileSettings";
-// import OrdersPage from "./pages/OrdersPage";
-// import WalletPage from "./pages/WalletPage";
-// import PromotionsPage from "./pages/PromotionsPage";
-// import StoresPage from "./pages/StoresPage";
-// import SupplierDetailPage from "./pages/SupplierDetailPage";
-// import CartPage from "./pages/CartPage";
-// import ProductsPage from "./pages/ProductsPage";
-// import ProductDetailPage from "./pages/ProductDetailPage";
+import ProfileSettings from "./pages/Buyer/ProfileSettings";
+import OrdersPage from "./pages/OrdersPage";
+import WalletPage from "./pages/WalletPage";
+import PromotionsPage from "./pages/PromotionsPage";
+import StoresPage from "./pages/StoresPage";
+import SupplierDetailPage from "./pages/SupplierDetailPage";
+import CartPage from "./pages/CartPage";
+import ProductsPage from "./pages/ProductsPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 import SupplierDashboard from "./pages/Supplier/SupplierDashboard";
 import RoleBasedRoute from "./components/auth/RoleBasedRoute";
-// import BuyerRoute from "./components/auth/BuyerRoute";
+import BuyerRoute from "./components/auth/BuyerRoute";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import SupplierLayout from "./pages/Supplier/SupplierLayout";
@@ -92,14 +92,14 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<DefaultRedirect />} />
-          {/* <Route 
+          <Route 
             path="/home" 
             element={
               <BuyerRoute>
                 <Home />
               </BuyerRoute>
             } 
-          /> */}
+          />
           <Route
             path="/signup"
             element={
@@ -118,7 +118,7 @@ function App() {
           />
           {/* <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password/:token" element={<ResetPasswordPage />} /> */}
-          {/* <Route
+          <Route
             path="/profile"
             element={
               <PrivateRoute>
@@ -205,7 +205,7 @@ function App() {
                 <CartPage />
               </BuyerRoute>
             }
-          /> */}
+          />
           <Route
             path="/s"
             element={
