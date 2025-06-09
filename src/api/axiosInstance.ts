@@ -1,9 +1,10 @@
 import axios from "axios";
+import { apiUrls } from "../properties";
 
 let logoutHandler: (() => void) | null = null;
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: apiUrls.BASEURL,
   withCredentials: true,
 });
 
