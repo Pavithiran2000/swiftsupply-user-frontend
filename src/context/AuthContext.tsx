@@ -29,9 +29,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setLoading(true);
     axiosInstance
       .get("/auth/me")
-      .then((res) => setUser(res.data))
+      .then((res) => {
+        console.log("Response from /auth/me:", res); // Logging the response
+        setUser(res.data);
+      })
       .catch((err) => {
         if (err.response?.status === 401) setUser(null);
+        else console.error("Error fetching user:", err); // Optional: log other errors
       })
       .finally(() => setLoading(false));
   };
@@ -44,7 +48,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   useEffect(() => setLogoutHandler(() => logout), []);
-  useEffect(() => { refreshUser(); }, []);
+  useEffect(() => {
+    refreshUser();
+  }, []);
 
   // Login: just trigger user refresh (cookie is set by backend)
   const login = () => refreshUser();

@@ -1,4 +1,4 @@
-import SignupStepper from "../components/auth";
+import SignupStepper from "../components/auth/SignupStepper";
 // import SignupStepper from "../components/auth/SignupStepper";
 import signupImage from "../assets/png/signup.png";
 import logo from "../assets/png/logo.png"; // Import your logo
