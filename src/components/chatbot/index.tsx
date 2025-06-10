@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { TextField, Button, IconButton, Box, Paper } from "@mui/material";
 import { Send, Trash2 } from "lucide-react";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
 
 type Message = { from: "user" | "bot"; text: string };
 type ChatPayload = { message: string; history: [string, string][] };
@@ -112,7 +112,7 @@ const ChatBotWidget = () => {
                       : "bg-blue-600 text-white"
                   }`}
                 >
-                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                  {/* <ReactMarkdown>{msg.text}</ReactMarkdown> */}
                 </div>
               </div>
             ))}
