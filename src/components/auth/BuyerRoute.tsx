@@ -28,7 +28,7 @@ const BuyerRoute: React.FC<BuyerRouteProps> = ({
     return <>{children}</>;
   }
   // If user is a seller, redirect them to supplier dashboard
-  if (user.role === "seller") {
+  if (user.role === "SELLER") {
     if (showAccessMessage) {
       return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
