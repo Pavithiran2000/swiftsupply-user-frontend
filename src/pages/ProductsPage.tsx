@@ -115,14 +115,26 @@ const ProductsPage: React.FC = () => {
     { value: "rating-desc", label: "Highest Rated" },
     { value: "reviews-desc", label: "Most Reviews" },
     { value: "name-asc", label: "Name: A to Z" },
-  ];
-  useEffect(() => {
+  ];  useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
+        // Convert filters to API format, only including defined values
+        const apiFilters: any = {};
+        
+        if (searchQuery) apiFilters.search = searchQuery;
+        if (filters.category) apiFilters.category = filters.category;
+        if (filters.productType) apiFilters.productType = filters.productType;
+        if (filters.priceRange?.[0] !== undefined) apiFilters.minPrice = filters.priceRange[0];
+        if (filters.priceRange?.[1] !== undefined) apiFilters.maxPrice = filters.priceRange[1];
+        if (filters.rating) apiFilters.minRating = filters.rating;
+        if (filters.inStock !== undefined) apiFilters.inStock = filters.inStock;
+        if (filters.isNew !== undefined) apiFilters.isNew = filters.isNew;
+        if (filters.isTrending !== undefined) apiFilters.isTrending = filters.isTrending;
+
         const response = await productApi.getProducts(
-          // filters,
-          // sort,
+          apiFilters,
+          sort,
           pagination
         );
 

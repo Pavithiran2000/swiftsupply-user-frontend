@@ -78,6 +78,7 @@ import NewsletterSignup from "../components/Home/NewsletterSignup";
 import Footer from "../components/Home/Footer";
 import Api from "../api/api";
 import { useAuth } from "../context/AuthContext";
+import ChatBotWidget from "../components/chatbot";
 
 const HomePage: React.FC = () => {
   const theme = useTheme();
@@ -112,6 +113,7 @@ const HomePage: React.FC = () => {
         maxWidth: "100%",
       }}
     >
+      <ChatBotWidget/>
       <Header />
       <Box component="main" sx={{ overflowX: "hidden", width: "100%", maxWidth: "100%" }}>
         <HeroBanner />

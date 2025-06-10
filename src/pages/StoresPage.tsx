@@ -317,18 +317,28 @@ const SuppliersPage: React.FC = () => {
   //   };
 
   //   fetchSuppliers();
-  // }, [page]); // Re-fetch if page changes
-
-  // Handlers
+  // }, [page]); // Re-fetch if page changes  // Handlers
   const loadSuppliers = async () => {
     setLoading(true);
     try {
-      // Simulate API call
-      // await new Promise(resolve => setTimeout(resolve, 800));
-      const { suppliers, total, pages } = await supplierApi.getAllSuppliers({
+      // Convert filters to API format
+      const apiParams: any = {
         page: pagination.page,
         per_page: pagination.limit,
-      });
+      };
+
+      // Only add parameters if they have values
+      if (searchQuery) apiParams.search = searchQuery;
+      if (filters.businessType) apiParams.businessType = filters.businessType;
+      if (filters.verified !== undefined) apiParams.verified = filters.verified;
+      if (filters.isGoldSupplier !== undefined) apiParams.isGoldSupplier = filters.isGoldSupplier;
+      if (filters.isPremium !== undefined) apiParams.isPremium = filters.isPremium;
+      if (filters.ratingMin) apiParams.ratingMin = filters.ratingMin;
+      if (filters.categories?.length) apiParams.categories = filters.categories.join(',');
+      if (sort.field) apiParams.sortField = sort.field;
+      if (sort.order) apiParams.sortOrder = sort.order;
+
+      const { suppliers, total, pages } = await supplierApi.getAllSuppliers(apiParams);
       console.log(suppliers);
       console.log(total);
       console.log(pages);
@@ -338,79 +348,6 @@ const SuppliersPage: React.FC = () => {
         ...prev,
         total: total,
         totalPages: pages,
-      }));
-
-      let filteredSuppliers = [...suppliers];
-
-      // Apply search filter
-      if (searchQuery) {
-        filteredSuppliers = filteredSuppliers.filter(
-          (supplier) =>
-            supplier.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            supplier.description
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase()) ||
-            supplier.productTypes.some((product: string) =>
-              product.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-        );
-      }
-
-      // Apply filters
-
-      if (filters.businessType) {
-        filteredSuppliers = filteredSuppliers.filter(
-          (s) => s.businessType === filters.businessType
-        );
-      }
-      if (filters.verified !== undefined) {
-        filteredSuppliers = filteredSuppliers.filter(
-          (s) => s.verified === filters.verified
-        );
-      }
-      if (filters.isGoldSupplier !== undefined) {
-        filteredSuppliers = filteredSuppliers.filter(
-          (s) => s.isGoldSupplier === filters.isGoldSupplier
-        );
-      }
-      if (filters.isPremium !== undefined) {
-        filteredSuppliers = filteredSuppliers.filter(
-          (s) => s.isPremium === filters.isPremium
-        );
-      }
-      if (filters.ratingMin) {
-        filteredSuppliers = filteredSuppliers.filter(
-          (s) => s.rating >= filters.ratingMin!
-        );
-      }
-      if (filters.categories && filters.categories.length > 0) {
-        filteredSuppliers = filteredSuppliers.filter((s) =>
-          s.categories.some((cat: string) => filters.categories!.includes(cat))
-        );
-      }
-
-      // Apply sorting
-      filteredSuppliers.sort((a, b) => {
-        const aValue = a[sort.field];
-        const bValue = b[sort.field];
-
-        if (sort.order === "asc") {
-          return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
-        } else {
-          return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
-        }
-      });
-
-      // // Apply pagination
-      // const startIndex = (pagination.page - 1) * pagination.limit;
-      // const endIndex = startIndex + pagination.limit;
-      // const paginatedSuppliers = filteredSuppliers.slice(startIndex, endIndex);
-
-      setSuppliers(filteredSuppliers);
-      setPagination((prev) => ({
-        ...prev,
-        total: filteredSuppliers.length,
-        totalPages: Math.ceil(filteredSuppliers.length / pagination.limit),
       }));
     } catch (error) {
       console.error("Error loading suppliers:", error);

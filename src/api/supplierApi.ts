@@ -205,9 +205,20 @@ export const supplierApi = {
   //     console.error('Failed to fetch suppliers:', error);
   //     throw error;
   //   }
-  // },
-  // Get suppliers by pagination
-  getAllSuppliers: async (params?: { page?: number; per_page?: number }) => {
+  // },  // Get suppliers by pagination
+  getAllSuppliers: async (params?: { 
+    page?: number; 
+    per_page?: number;
+    search?: string;
+    businessType?: string;
+    verified?: boolean;
+    isGoldSupplier?: boolean;
+    isPremium?: boolean;
+    ratingMin?: number;
+    categories?: string;
+    sortField?: string;
+    sortOrder?: string;
+  }) => {
     try {
       const response = await axiosInstance.get("/suppliers/", { params });
       return response.data;

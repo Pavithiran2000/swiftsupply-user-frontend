@@ -34,16 +34,16 @@ export interface ProductApiResponse {
 const productApi = {
   // Fetch public product listings
   getProducts: async (
-    // filters: ProductFilterParams = {},
-    // sort: ProductSort = { field: "createdAt", order: "desc" },
+    filters: ProductFilterParams = {},
+    sort: ProductSort = { field: "createdAt", order: "desc" },
     pagination: PaginationParams = { page: 1, limit: 12 }
   ): Promise<ProductApiResponse> => {
     try {
       const response = await axiosInstance.get("/products/", {
         params: {
-          // ...filters,
-          // sortField: sort.field,
-          // sortOrder: sort.order,
+          ...filters,
+          sortField: sort.field,
+          sortOrder: sort.order,
           page: pagination.page,
           limit: pagination.limit,
         },
